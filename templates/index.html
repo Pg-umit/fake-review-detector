@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Fake Review Detector</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
+<style>
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
@@ -18,133 +11,55 @@
       color: #333;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
     }
-
+  
     header {
+      position: fixed;
+      top: 0;
       width: 100%;
       padding: 1rem 2rem;
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(10px);
+      background: #ffe4ec; /* baby pink */
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      z-index: 1000;
     }
-
-    header h2 {
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-
-    header img {
-      height: 40px;
-    }
-
-    .container {
+  
+    main.container {
       background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(8px);
       max-width: 600px;
       width: 90%;
       padding: 2rem;
-      margin-top: 2rem;
+      margin: 6rem auto 4rem auto; /* leave space for fixed header and footer */
       border-radius: 20px;
       box-shadow: 0 12px 24px rgba(0,0,0,0.2);
       text-align: center;
     }
-
+  
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #ffe4ec; /* baby pink */
+      text-align: center;
+      padding: 1rem;
+      color: #555;
+      font-size: 0.9rem;
+      box-shadow: 0 -4px 6px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+  
     h1 {
       font-size: 2rem;
       color: #f472b6;
       margin-bottom: 1.5rem;
     }
-
-    form {
-      display: flex;
-      flex-direction: column;
-    }
-
-    textarea {
-      padding: 1rem;
-      border: 2px solid #facc15;
-      border-radius: 12px;
-      font-size: 1rem;
-      resize: vertical;
-      min-height: 120px;
-      margin-bottom: 1rem;
-    }
-
-    textarea:focus {
-      outline: none;
-      border-color: #fbbf24;
-      box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.3);
-    }
-
-    button {
-      background-color: #38bdf8;
-      color: white;
-      font-size: 1rem;
-      font-weight: 600;
-      border: none;
-      padding: 0.75rem;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #0ea5e9;
-    }
-
-    .result {
-      margin-top: 1.5rem;
-      font-size: 1.25rem;
-      font-weight: bold;
-      color: #22c55e;
-    }
-
-    footer {
-      text-align: center;
-      margin: 2rem 0;
-      color: #555;
-      font-size: 0.9rem;
-      background-color: rgba(255, 255, 255, 0.6);
-      padding: 1rem;
-      width: 100%;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-    }
+  
+    /* Rest of your existing styles below (textarea, button, etc.) */
   </style>
-</head>
-<body>
-
-  <header>
-    <img src="https://img.icons8.com/fluency/48/verified-badge.png" alt="Logo">
-    <h2>Fake Review Detector 💬</h2>
-  </header>
-
-  <main class="container">
-    <h1>🛍️ Check a Review</h1>
-    <form action="/predict" method="POST">
-      <textarea name="review" placeholder="Paste your review here..." required>{{ request.form.get('review', '') }}</textarea>
-      <button type="submit">🔍 Check Now</button>
-    </form>
-
-    {% if result %}
-    <div class="result">
-      🎯 Result: {{ result }}
-    </div>
-    {% endif %}
-  </main>
-
-  <footer>
-    Made with ❤️ and 🧠 by Team Techies 🚀
-  </footer>
-
-</body>
-</html>
+  
 
 
 
