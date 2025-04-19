@@ -9,8 +9,9 @@
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
-      background: #f4f7fa;
+      background: linear-gradient(145deg, #f4f7fa, #e8f0fc);
       color: #333;
+      overflow-x: hidden;
     }
 
     header {
@@ -24,6 +25,12 @@
 
     header img {
       height: 40px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
     }
 
     .container {
@@ -31,14 +38,15 @@
       margin: 3rem auto;
       background: #fff;
       padding: 2rem;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
       text-align: center;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .container:hover {
-      transform: translateY(-5px);
+      transform: translateY(-6px);
+      box-shadow: 0 25px 70px rgba(0,0,0,0.12);
     }
 
     h1 {
@@ -54,7 +62,7 @@
     textarea {
       padding: 1rem;
       border: 1px solid #ddd;
-      border-radius: 10px;
+      border-radius: 12px;
       resize: vertical;
       min-height: 120px;
       font-size: 1rem;
@@ -75,17 +83,26 @@
       font-size: 1rem;
       border-radius: 10px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
     button:hover {
       background-color: #0ea5e9;
+      transform: scale(1.03);
     }
 
     .result {
       margin-top: 1.5rem;
       font-size: 1.25rem;
       font-weight: bold;
+      opacity: 0;
+      animation: fadeIn 0.8s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
     }
 
     footer {
@@ -97,9 +114,32 @@
       font-size: 0.9rem;
       box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
     }
+
+    .bg-decor {
+      position: absolute;
+      top: -100px;
+      left: -100px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, #c3e0f9 20%, transparent 70%);
+      z-index: -1;
+    }
+
+    .bg-decor2 {
+      position: absolute;
+      bottom: -120px;
+      right: -120px;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, #dbeafe 25%, transparent 70%);
+      z-index: -1;
+    }
   </style>
 </head>
 <body>
+
+<div class="bg-decor"></div>
+<div class="bg-decor2"></div>
 
 <header>
   <img src="https://img.icons8.com/fluency/48/verified-badge.png" alt="logo">
@@ -126,6 +166,7 @@
 
 </body>
 </html>
+
 
 
 
