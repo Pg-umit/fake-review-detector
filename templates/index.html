@@ -1,99 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Fake Review Detector</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: url("/static/background.png") no-repeat center center fixed;
-            background-size: cover;
-            font-family: 'Segoe UI', sans-serif;
-            color: #333;
-        }
+  <meta charset="UTF-8">
+  <title>Fake Review Detector</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url("/static/background.png") no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+    }
 
-        header, footer {
-            position: fixed;
-            width: 100%;
-            background-color: white;
-            text-align: center;
-            padding: 10px;
-            z-index: 100;
-        }
+    header, footer {
+      position: fixed;
+      width: 100%;
+      background-color: white;
+      text-align: center;
+      padding: 10px;
+      z-index: 100;
+    }
 
-        header {
-            top: 0;
-            border-bottom: 1px solid #ccc;
-        }
+    header {
+      top: 0;
+      border-bottom: 1px solid #ccc;
+    }
 
-        footer {
-            bottom: 0;
-            border-top: 1px solid #ccc;
-        }
+    footer {
+      bottom: 0;
+      border-top: 1px solid #ccc;
+    }
 
-        .container {
-            max-width: 600px;
-            margin: 120px auto 80px auto;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            text-align: center;
-        }
+    .container {
+      max-width: 600px;
+      margin: 120px auto 80px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
 
-        textarea {
-            width: 100%;
-            height: 150px;
-            padding: 10px;
-            margin-bottom: 20px;
-            font-size: 1rem;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            resize: none;
-        }
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      resize: none;
+    }
 
-        button {
-            padding: 10px 25px;
-            font-size: 1rem;
-            background-color: #4A90E2;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+    button {
+      padding: 10px 25px;
+      font-size: 1rem;
+      background-color: #4A90E2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
 
-        .result {
-            margin-top: 20px;
-            font-size: 1.3rem;
-            font-weight: bold;
-        }
-    </style>
+    .result {
+      margin-top: 20px;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <h2>🧠 Fake Review Detector</h2>
-    </header>
+<header>
+  <h2>🧠 Fake Review Detector</h2>
+</header>
 
-    <div class="container">
-        <h1>🔍 Check a Review</h1>
-        <form method="POST" action="/">
-            <textarea name="review" placeholder="Paste your review here...">{{ review }}</textarea>
-            <br>
-            <button type="submit">Check Now</button>
-        </form>
+<div class="container">
+  <h1>🔍 Check a Review</h1>
+  <form method="POST" action="/">
+    <textarea name="review" placeholder="Paste your review here...">{{ review }}</textarea>
+    <br>
+    <button type="submit">Check Now</button>
+  </form>
 
-        {% if result %}
-            <div class="result">
-                Result: {{ result }}
-            </div>
-        {% endif %}
+  {% if result %}
+    <div class="result">
+      Result: {{ result }}
     </div>
+  {% endif %}
+</div>
 
-    <footer>
-        <p>Made with ❤️ by Team Techies</p>
-    </footer>
+<footer>
+  <p>Made with ❤️ by Team Techies</p>
+</footer>
 
 </body>
 </html>
+
