@@ -132,25 +132,18 @@
     </style>
 </head>
 <body>
-    <header><strong>Fake Review Detector</strong></header>
+  <div class="container">
+      <h1>🔍 Check a Review</h1>
+      <form method="POST" action="/">
+          <textarea name="review" placeholder="Paste your review here..." required>{{ review }}</textarea>
+          <button type="submit">Check Now</button>
+      </form>
 
-    <div class="container">
-        <h1>🔍 Check a Review</h1>
-        <form method="POST" action="/">
-            <textarea name="review" placeholder="Paste your review here...">{{ review }}</textarea>
-            <button type="submit">Check Now</button>
-        </form>
-
-        {% if result %}
-            <div class="result">
-                This review is likely: <span style="color: {{ 'green' if result == 'Real' else 'red' }}">{{ result }}</span>
-            </div>
-            <div class="typing-indicator">
-                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-            </div>
-        {% endif %}
-    </div>
-
+      {% if result %}
+          <p><strong>Result:</strong> {{ result }}</p>
+      {% endif %}
+  </div>
+  </body>
     <footer>
         Made with ❤️ by Team Techies 🚀
     </footer>
