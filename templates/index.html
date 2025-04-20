@@ -1,216 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Fake Review Detector</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: url("{{ url_for('static', filename='background.png') }}") no-repeat center center fixed;
-      background-size: cover;
-      overflow-x: hidden;
-    }
+    <meta charset="UTF-8">
+    <title>Fake Review Detector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Nunito', sans-serif;
+            background: url("/static/background.png") no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            overflow-x: hidden;
+        }
+        header, footer {
+            background-color: white;
+            padding: 1rem;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+        header { top: 0; }
+        footer { bottom: 0; font-size: 0.9rem; }
 
-    .header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background-color: #f3d8dcf6;
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: bold;
-      z-index: 1000;
-    }
+        .container {
+            margin: 120px auto 80px;
+            padding: 30px;
+            max-width: 500px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            animation: fadeIn 1.2s ease-in-out;
+        }
 
-    .footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background-color: #f3d8dcf6;
-      padding: 0.75rem;
-      text-align: center;
-      font-size: 1rem;
-      z-index: 1000;
-    }
+        h1 {
+            text-align: center;
+            color: #0077cc;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
 
-    .main-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding-top: 100px;
-      padding-bottom: 80px;
-    }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border: 2px solid #aad4f5;
+            border-radius: 10px;
+            font-size: 1rem;
+            resize: none;
+        }
 
-    .card {
-      background-color: rgba(255, 255, 255, 0.95);
-      padding: 2rem;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      text-align: center;
-      max-width: 500px;
-      width: 90%;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 1s ease;
-    }
+        button {
+            margin-top: 15px;
+            width: 100%;
+            padding: 12px;
+            background-color: #0077cc;
+            color: white;
+            border: none;
+            font-size: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
 
-    .card.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+        button:hover {
+            background-color: #005fa3;
+        }
 
-    textarea {
-      width: 100%;
-      height: 100px;
-      margin: 1rem 0;
-      padding: 1rem;
-      border: 2px solid #ffc107;
-      border-radius: 10px;
-      font-size: 1rem;
-      resize: none;
-    }
+        .result {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #444;
+        }
 
-    button {
-      background-color: #00bfff;
-      color: white;
-      padding: 0.8rem 1.5rem;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
+        /* Typing bot animation */
+        .typing-indicator {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
 
-    button:hover {
-      background-color: #1e90ff;
-    }
+        .dot {
+            height: 10px;
+            width: 10px;
+            margin: 0 3px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            animation: blink 1.4s infinite;
+        }
 
-    .result {
-      margin-top: 1rem;
-      font-size: 1.2rem;
-      color: #ff4081;
-    }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
 
-    .typing-indicator {
-      margin-top: 0.5rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 24px;
-    }
+        @keyframes blink {
+            0%, 80%, 100% { opacity: 0; }
+            40% { opacity: 1; }
+        }
 
-    .dot {
-      height: 10px;
-      width: 10px;
-      margin: 0 2px;
-      background-color: #888;
-      border-radius: 50%;
-      animation: bounce 1s infinite;
-    }
+        /* Scroll-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .dot:nth-child(2) { animation-delay: 0.2s; }
-    .dot:nth-child(3) { animation-delay: 0.4s; }
+        /* Emoji rain */
+        .emoji-rain {
+            position: fixed;
+            top: -2rem;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
 
-    @keyframes bounce {
-      0%, 80%, 100% { transform: scale(0); }
-      40% { transform: scale(1); }
-    }
+        .emoji {
+            position: absolute;
+            font-size: 2rem;
+            animation: fall linear infinite;
+        }
 
-    .sparkle-container, .emoji-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      width: 100%;
-      height: 100%;
-      z-index: 500;
-    }
-
-    .sparkle, .emoji {
-      position: absolute;
-      font-size: 1.5rem;
-      animation: fall linear;
-    }
-
-    @keyframes fall {
-      0% {
-        transform: translateY(-5vh) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
-  </style>
+        @keyframes fall {
+            0% { top: -2rem; opacity: 1; }
+            100% { top: 100vh; opacity: 0; }
+        }
+    </style>
 </head>
 <body>
+    <header><strong>Fake Review Detector</strong></header>
 
-  <header class="header">
-    <h1>Fake Review Detector 🕵️‍♀️</h1>
-  </header>
+    <div class="container">
+        <h1>🔍 Check a Review</h1>
+        <form method="POST" action="/">
+            <textarea name="review" placeholder="Paste your review here...">{{ review }}</textarea>
+            <button type="submit">Check Now</button>
+        </form>
 
-  <div class="sparkle-container"></div>
-  <div class="emoji-container"></div>
-
-  <div class="main-container">
-    <div class="card" id="animatedCard">
-      <h2>📦 Check a Review</h2>
-      <form method="POST">
-        <textarea name="review" placeholder="Paste your review here...">{{ review_text }}</textarea>
-        <button type="submit">🔍 Check Now</button>
-      </form>
-
-      {% if prediction %}
-      <div class="result">
-        <strong>Prediction:</strong> {{ prediction }}
-      </div>
-      <div class="typing-indicator">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
-      {% endif %}
+        {% if result %}
+            <div class="result">
+                This review is likely: <span style="color: {{ 'green' if result == 'Real' else 'red' }}">{{ result }}</span>
+            </div>
+            <div class="typing-indicator">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+        {% endif %}
     </div>
-  </div>
 
-  <footer class="footer">
-    <p>Made with ❤️ and ☕ by Team Techies 🚀</p>
-  </footer>
+    <footer>
+        Made with ❤️ by Team Techies 🚀
+    </footer>
 
-  <script>
-    // Scroll animation
-    window.addEventListener("DOMContentLoaded", () => {
-      const card = document.getElementById("animatedCard");
-      setTimeout(() => card.classList.add("show"), 300);
-    });
+    <div class="emoji-rain" id="emojiRain"></div>
 
-    // Sparkle + Emoji rain
-    const sparkleContainer = document.querySelector('.sparkle-container');
-    const emojiContainer = document.querySelector('.emoji-container');
+    <script>
+        const emojis = ["✨", "💬", "🤖", "📝", "📢", "✅", "❌", "⭐"];
+        function createEmoji() {
+            const emoji = document.createElement("div");
+            emoji.classList.add("emoji");
+            emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.style.left = Math.random() * 100 + "vw";
+            emoji.style.animationDuration = 2 + Math.random() * 3 + "s";
+            document.getElementById("emojiRain").appendChild(emoji);
 
-    const emojis = ["😂", "😭", "😡", "😍", "😎", "😒", "🙄", "🤖", "🧠"];
+            setTimeout(() => {
+                emoji.remove();
+            }, 5000);
+        }
 
-    function createFallingItem(container, content, className) {
-      const el = document.createElement("div");
-      el.classList.add(className);
-      el.style.left = `${Math.random() * 100}vw`;
-      el.style.animationDuration = `${2 + Math.random() * 3}s`;
-      el.innerText = content;
-      container.appendChild(el);
-      setTimeout(() => el.remove(), 5000);
-    }
-
-    setInterval(() => {
-      createFallingItem(sparkleContainer, "✨", "sparkle");
-      createFallingItem(emojiContainer, emojis[Math.floor(Math.random() * emojis.length)], "emoji");
-    }, 400);
-  </script>
-
+        setInterval(createEmoji, 500);
+    </script>
 </body>
 </html>
 
